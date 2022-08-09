@@ -1,5 +1,23 @@
 
- 
+#def is_exemptedGood(item)
+def taxRateCalculator(exemptedFlag, importFlag)
+  taxRate = 0.00
+  if exemptedFlag == true and importFlag == false
+    taxRate = 0.00
+
+  elsif exemptedFlag == true and importFlag == true
+    taxRate = 0.05
+
+  elsif exemptedFlag == false and importFlag == false
+    taxRate = 0.10
+
+  else
+    taxRate = 0.15
+  end
+  return taxRate
+end
+
+
 def SalesTax(itemList)
   extemptedGood = ['book', 'books' 'food', 'chocolate', 'chocolates','medicine', 'pills']
   oldSum = 0
@@ -19,21 +37,8 @@ def SalesTax(itemList)
     if tempListitem.include? 'imported'
       importFlag = true
     end
-    taxRate = 0.00
-    # if exemptedFlag == true and importFlag == false
-    #   taxRate = 0.00
 
-    if exemptedFlag == true and importFlag == true
-      taxRate = 0.05
-
-    elsif exemptedFlag == false and importFlag == false
-      taxRate = 0.10
-
-    else
-      taxRate = 0.15
-
-    end
-    
+    taxRate = taxRateCalculator(exemptedFlag, importFlag)
     oldSum += Float(tempListitem.last())
     newPrice = (Float(tempListitem.last()) * taxRate) + Float(tempListitem.last())
     newPrice = newPrice * Float(tempListitem[0])
@@ -46,28 +51,30 @@ def SalesTax(itemList)
   puts 'Total: ' + String(newSum)
 end
 
+itemList = []
+item = ''
+while(item != 'q')
+  item = gets.chomp()
+  itemList.push(item)
+end
+itemList.pop()
 
-itemList = ['1 book at 12.49',
-  '1 music CD at 14.99',
-  '1 chocolate bar at 0.85']
 
-puts
-puts 'Output 1'
-SalesTax(itemList)
 
-itemList = ['1 imported box of chocolates at 10.00',
-  '1 imported bottle of perfume at 47.50']
 
-puts
-puts 'Output 2'
-SalesTax(itemList)
 
-  itemList = ['1 imported bottle of perfume at 27.99',
-  '1 bottle of perfume at 18.99',
-  '1 packet of headache pills at 9.75',
-  '1 box of imported chocolates at 11.25']
 
-puts
-puts 'Output 3'
-SalesTax(itemList)
+
+# puts
+# puts 'Output =>'
+# SalesTax(itemList)
+
+# itemList2 = ['1 imported bottle of perfume at 27.99',
+#   '1 bottle of perfume at 18.99',
+#   '1 packet of headache pills at 9.75',
+#   '1 box of imported chocolates at 11.25']
+
+# puts
+# puts 'Output 3'
+# SalesTax(itemList2)
 
