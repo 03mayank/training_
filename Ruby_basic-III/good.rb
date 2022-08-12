@@ -2,26 +2,29 @@ require_relative "print_reciept.rb"
 require_relative "Input_parshing.rb"
 
 class Product
-  attr_accessor :quantity, :item_name, :price, :exempted_flag, :import_flag, :tax
-  def initialize(quantity, item_name, price, exempted_flag, import_flag)
+  attr_accessor :quantity, :item_name, :price, :exempted_flag, :import_flag, :tax, :is_valid
+  def initialize(quantity, item_name, price, exempted_flag, import_flag, is_valid)
     @quantity = quantity
     @item_name = item_name
     @price = price.to_f
     @exempted_flag = exempted_flag
     @import_flag = import_flag
+    @is_valid = is_valid
     # @tax = 0
     @tax_rate = 0.00
   end
 
   def tax_calculator
-    if @exempted_flag == false and @import_flag == true
-      @tax = @price * 0.15
-    elsif @exempted_flag == false and @import_flag == false
-      @tax = @price * 0.10
-    elsif @exempted_flag == true and @import_flag == true
-      @tax = @price * 0.05
-    else
-      @tax = 0.00
+    if is_valid == true
+      if @exempted_flag == false and @import_flag == true
+        @tax = @price * 0.15
+      elsif @exempted_flag == false and @import_flag == false
+        @tax = @price * 0.10
+      elsif @exempted_flag == true and @import_flag == true
+        @tax = @price * 0.05
+      else
+        @tax = 0.00
+      end
     end
   end
 end
